@@ -1,0 +1,1 @@
+Submission project snapshot. Excluded: .env, .venv, __pycache__, .vscode, logs/interactions.jsonl, and local Git metadata. Active retrieval excerpts are in corpus/. The root run_manifest.json is a copy of logs/run_manifest.json.

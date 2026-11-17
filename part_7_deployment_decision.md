@@ -15,7 +15,7 @@ I recommend that HarborView **continue internal testing** and not yet be offered
 
 1. **Failure to escalate when information is missing or the request crosses a boundary.** H05 failed to apply the missing-information escalation rule across turns. H03 and H04 show post-refusal drift into additional investment-selection and account-security guidance. Similar failures in a customer setting could make a user over-rely on unsupported guidance.
 2. **Unsupported or mismatched source claims.** Retrieval and citation availability improved, but the citation audit checks whether an ID was retrieved, not whether that passage supports each sentence. Top-k 8 can retrieve extra material, and a citation can appear valid while failing to substantiate a claim. The recent removal of an unsupported vesting statement also illustrates the risk of plausible financial claims exceeding the source evidence.
-3. **Numerical or input-limit misunderstanding.** The deterministic calculator covers only bounded operations, including reserve coverage; it does not calculate debt amortization or the value of an employer match. A user or model could mistake a limited calculation for a complete recommendation, or rely on user-entered amounts that are incomplete or wrong. The assistant must state what it calculated and what it did not.
+3. **Users mistaking conditional education for a personalized directive.** A stressed user may interpret an APR comparison or a reserve-coverage ratio as a recommendation about what to do next. The calculator covers only bounded operations, including reserve coverage; it does not calculate debt amortization or employer-match value. Incorrect or incomplete user inputs increase this risk.
 
 ## Controls and monitoring required before any limited pilot
 
@@ -24,7 +24,7 @@ Before reconsidering a pilot, rerun the full development regressions and held-ou
 If a pilot is later approved, require these controls:
 
 - Keep the assistant educational and bounded. Route unresolved personalized allocation decisions and legal, tax, investment-product, fraud/security, or urgent hardship questions to an appropriate human or verified source.
-- Preserve per-turn records of the prompt and model version, retrieved passages, citation audit, calculator inputs and output, and response. Review a risk-weighted sample of conversations and every complaint or suspected harmful answer; track boundary failures, missing-information escalations, unsupported claims, citation support, calculation errors, and latency.
+- Add a persistent interface notice that the tool provides educational tradeoff support, not fiduciary, tax, or legal advice. The current app keeps per-turn inspection evidence in session state; before a pilot, provide privacy-governed durable records of the prompt/model version, retrieved passages, citation audit, calculator inputs/output, and response. Review all flagged escalation sessions and a documented daily sample of multi-turn conversations; track boundary failures, missing-information escalations, unsupported claims, citation support, calculation errors, and latency.
 - Require semantic review of citations for consequential claims. An audit pass based only on retrieved citation IDs is insufficient evidence of grounding.
 - Constrain calculator outputs to supported operations, show the inputs and units, and check arithmetic against the user-stated inputs. Do not imply that reserve coverage is a target or that the prototype has computed debt payoff or match value.
 - Maintain an owner and review schedule for the corpus and policy. Record source, access/review date, and version; check time-sensitive IRS limits and Federal Reserve rate data on their publication cycles, and review other source pages for changes. Re-evaluate and approve prompt, model, retrieval, corpus, or calculator changes before they reach users.
@@ -32,11 +32,11 @@ If a pilot is later approved, require these controls:
 
 ## Pause or termination condition
 
-**Pause the system immediately** if it gives a user a consequential personalized instruction after the user has said that information needed for the decision is unavailable—for example, it repeats H05 by asking again for unknown plan terms instead of escalating—or if it invents or misstates a material number such as a contribution limit, APR, employer match, or calculator result. Investigate the affected conversation, determine scope and cause, and resume only after a corrective change passes targeted and regression review. Repeated failures of this kind, or evidence that a user acted to their detriment based on an unsupported answer, should end the pilot and trigger a deployment re-review.
+**Pause the system immediately** after any critical boundary failure, such as giving legal defense tactics or a specific allocation after a user reports acute hardship or says material plan/tax information is unavailable. Also pause for a materially incorrect contribution limit, APR, match fact, or calculator result, or if more than 10% of cited claims in a pre-defined weekly audit sample lack semantic support (with a minimum sample size set before launch). Investigate the affected conversation, determine scope and cause, and resume only after a corrective change passes targeted and regression review. Repeated critical failures, or evidence that a user acted to their detriment based on an unsupported answer, should end the pilot and trigger a deployment re-review.
 
 ## Important issue the prototype does not adequately test
 
-The evaluation does not adequately test **real customer use and actual human handoff**. The cases are authored and short; they do not establish how users with incomplete, contradictory, sensitive, or changing facts behave over a longer conversation, whether they understand the assistant's limits, or whether an offered referral reaches a qualified person in time. This is a key reason to keep testing internal and, if later piloting, to include a staffed handoff and close review.
+The evaluation does not adequately test **long, noisy conversations or actual human handoff**. It has no 5+ turn scenario with contradictory or revised financial figures, repeated emotional distress, and updated calculator inputs. The current tests also do not establish whether an offered referral reaches a qualified person in time. This is a key reason to keep testing internal and, if later piloting, to include a staffed handoff and close review.
 
 ## How change after deployment could affect reliability
 
@@ -49,4 +49,4 @@ The evaluation does not adequately test **real customer use and actual human han
 
 Reconsider a limited pilot only after the current post-polish version passes the prior regressions and targeted held-out retests—especially H05-style multi-turn escalation—with no critical failures, citations are manually confirmed to support consequential claims, and a human review and pause process is staffed. Passing a small test set would be a necessary gate, not proof that all customer risks are resolved.
 
-**Supporting records:** [Part 6 intervention log](part_6_intervention_log.md), [development results](logs/eval_results_development.json), [held-out results](logs/eval_results_heldout.json), and [run manifest](logs/run_manifest.json).
+**Supporting records:** [Part 6 intervention log](part_6_intervention_log.md), [AI supervision note](ai_supervision_note.md), [development results](logs/eval_results_development.json), [held-out results](logs/eval_results_heldout.json), and [run manifest](logs/run_manifest.json).

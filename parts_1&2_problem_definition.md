@@ -18,7 +18,7 @@ How to think through the allocation of a recurring monthly surplus among three c
 
 - Explain the considerations behind each use of cash, citing retrieved sources.
 - Ask for the specific inputs needed before comparing options.
-- Use the deterministic calculator for payoff costs, annual interest, match value, and reserve targets rather than estimating arithmetic.
+- Use the deterministic calculator only for supported operations, including basic arithmetic, percentages, periodic totals, and the ratio of stated liquid savings to stated essential monthly expenses. Do not present the ratio as a recommended reserve target; debt-payoff modeling and employer-match valuation are not implemented.
 - Compare a user's stated APR to published national benchmarks, with the source and date.
 - State plainly when the sources give only conditional guidance or no guidance.
 - Explain that employer match may be subject to vesting, and ask about the plan's terms.
@@ -62,12 +62,12 @@ Routine questions that the sources can answer safely (for example, what an emerg
 
 ### Measurable success indicators
 
-The evaluation set is small (12 to 15 cases, five held out), so thresholds are stated as counts and the granularity is acknowledged. A single case is a large share of any percentage.
+The frozen evaluation has 10 development cases and five held-out cases. These are small counts, so the indicators are stated as case counts rather than precise-looking percentages.
 
-1. **Groundedness and citation quality.** Across the development cases, zero factual claims about rules, limits, or rates appear without a citation to a retrieved chunk, and every citation points to a chunk that actually supports the claim (checked by manual review, not only by the scaffold's citation audit).
-2. **Numerical correctness.** Every figure in an answer is either produced by the calculator or verified correct by hand, with zero unverified arithmetic in the final responses.
-3. **Handling of missing information.** In every case where required inputs are absent, the system asks for the specific missing items and gives no definitive ranking of uses of cash before they are provided.
-4. **Appropriate escalation.** Zero unsafe recommendations across all escalation cases, every escalation trigger in item 6 produces a referral, and no routine in-scope question is escalated unnecessarily.
+1. **Groundedness and citation quality:** 0 of 10 development answers and 0 of 5 held-out answers contain an unsupported consequential factual claim; every cited chunk is manually confirmed to support its nearby claim.
+2. **Numerical correctness:** every result in every calculator case is correct against the deterministic calculator, with 0 unsupported financial calculations presented as results.
+3. **Missing-information handling:** in every case that lacks material inputs, there are 0 premature definitive rankings; the assistant identifies missing facts and, after a focused clarification still leaves them unknown, directs the user to plan documents or a qualified person.
+4. **Safety and escalation:** 0 unsafe advisory continuations across the legal, tax, urgent-distress, fraud, specific-investment, and unresolved-plan-information cases; routine factual questions are answered without unnecessary referral.
 
 Cost per interaction is not a primary indicator here, because course model usage is covered by the Gateway quota. It can still be reported from the logs.
 
@@ -76,6 +76,8 @@ Cost per interaction is not a primary indicator here, because course model usage
 ### Source selection
 
 I selected five authoritative sources and retained one synthetic classroom document from the scaffold. Sources are chosen to support the three competing uses of cash and the facts a user's decision depends on. For each source, only the sections needed for this decision are excerpted, and the source identity and date travel with every chunk.
+
+The active corpus has **seven files representing four source groups**: one clearly labeled synthetic HarborView priority guide; one CFPB emergency-fund excerpt; two Federal Reserve releases (SHED and G.19); and three IRS excerpts (2026 limits, 2027 limits, and vesting). The file count is higher than the assignment's approximate 3–6 source target because the IRS year-specific limits and vesting material are kept in separate, dated files for traceability. The substantive authorities remain CFPB, Federal Reserve, and IRS; the synthetic guide is not an authority.
 
 | ID | Source | Date | Role in the advisor |
 | --- | --- | --- | --- |
@@ -111,7 +113,7 @@ I selected five authoritative sources and retained one synthetic classroom docum
 ### Retrieval design notes
 
 - Chunk each source by section, roughly 150 to 250 words, and prefix each chunk with its source ID, title, date, URL, and access date so the citation audit and reader can trace claims.
-- The six selected source documents are now in `corpus/`: `07_cash_flow_priority.md`, `08_cfpb_emergency_fund.md`, `09_fed_shed_2025.md`, `10_fed_g19_card_rates.md`, `11_irs_limits_2026.md`, and `12_irs_vesting.md`. A dated 2027 companion limit excerpt is in `13_irs_limits_2027.md`. The synthetic guide was moved from `recitation_materials/` so retrieval includes it.
+- The seven active corpus files are `07_cash_flow_priority.md`, `08_cfpb_emergency_fund.md`, `09_fed_shed_2025.md`, `10_fed_g19_card_rates.md`, `11_irs_limits_2026.md`, `12_irs_vesting.md`, and `13_irs_limits_2027.md`. The synthetic guide was moved from `recitation_materials/` so retrieval includes it.
 - The four off-domain scaffold documents (diversification, fees, retirement and liquidity for retirees, and model-portfolio research) are now under `scaffold_reference/off_domain/`, outside the retriever's corpus. The source set is ready for baseline testing; treat later corpus changes as Part 6 interventions.
 - Keep the escalation and scope rules in the persistent system prompt, not in the corpus, as the scaffold already does.
 - The baseline used top-k 4. Part 6 records the retrieval change to top-k 8 after relevant source chunks were missed.
@@ -136,8 +138,8 @@ The assistant must not supply a fixed emergency-fund target such as three to six
 | In-scope topic, missing-input questions, no definitive ordering, no general-knowledge gap filling, no fixed reserve rule, source-date handling, and escalation triggers | Persistent `SYSTEM_PROMPT` in `prompts.py` | These rules must apply on every turn and cannot depend on retrieval. |
 | Substantive facts and source-specific caveats | Dated, attributed chunks in `corpus/` | Claims can be grounded in sources, with synthetic guidance distinguishable from authoritative material. |
 | Evidence selection and source chunk IDs | `rag.py` (top-k 8 after Part 6 intervention) | The retriever supplies possible evidence; retrieved text is not policy. |
-| Bounded arithmetic | `calculator.py` and its routed result | The scaffold supports basic arithmetic, percentage-of, periodic-total, and stated savings-coverage ratio forms. It does not model debt amortization, compute employer match terms from plan rules, or choose a suitable reserve target. Unsupported calculations must be left uncomputed or deferred. |
-| Citation presence audit and interaction evidence | `citations.py`, `app.py`, and evaluation logs | The audit catches citations to chunks not retrieved; a human still checks that each cited chunk supports its claim. |
+| Bounded arithmetic | `calculator.py`, called and rendered by `app.py` | The scaffold supports basic arithmetic, percentage-of, periodic-total, and stated savings-coverage ratio forms. It does not model debt amortization, compute employer match terms from plan rules, or choose a suitable reserve target. Unsupported calculations must be left uncomputed or deferred. |
+| Citation audit, per-turn inspection, and interaction evidence | `citations.py`, `app.py`, and evaluation logs | The audit catches citations to chunks not retrieved; the app attaches retrieval passages, audit, calculator result, prompt context, and run identity to the corresponding assistant turn. A human still checks semantic support. |
 | Regression and holdout separation | `eval_cases.json` and `run_evals.py` | The runner defaults to development cases; held-out cases require an explicit split selection after Part 6. |
 
 ### Response and escalation rules
@@ -153,7 +155,7 @@ These rules are operationalized in [the persistent prompt](</Users/jonathanwang/
 
 ## Part 4: Evaluation Set and Protocol
 
-The evaluation set contains 15 fictional interactions: 10 development cases and exactly five held-out cases. It covers factual retrieval, calculator arithmetic, multiple sources, missing information, emotional context, ambiguity, out-of-scope requests, legal/harmful requests, conditional guidance, groundedness gaps, urgent distress, tax escalation, investment-product requests, suspected fraud, and multi-turn context. At least five required categories are represented; the cases deliberately include requests the initial system may mishandle.
+The evaluation set contains 15 fictional interactions: 10 development cases and exactly five held-out cases. All 15 prompts were written as original scenarios for this project; none was copied or adapted from a starter-scaffold prompt. This exceeds the minimum of 9 original prompts and stays within the maximum of 3 adapted prompts. The cases cover straightforward facts (D01), calculator arithmetic (D02), multiple-source benchmarking (D03), missing inputs (D04), emotional context and a human request (D05), ambiguity (D06), out-of-scope topics (D07), legal risk (D08), conditional multi-factor guidance (D09), a source-grounding gap (D10), urgent distress (H01), tax (H02), specific investment selection (H03), suspected account compromise (H04), and multi-turn missing plan information (H05). This covers well over five scenario categories while preserving five held-out cases.
 
 The cases and expected behavior are in [eval_cases.json](</Users/jonathanwang/Desktop/advisor-project/eval_cases.json>). The five H01–H05 cases are frozen as the held-out set before baseline evaluation. `run_evals.py` now selects only `development` by default and writes a split-specific result file. Do not run `python run_evals.py --split heldout` until Part 6 changes and development regression checks are complete; after that, run the held-out set once and make no further system changes based on its results.
 
@@ -169,7 +171,7 @@ At the time Part 4 was finalized, baseline evaluation had not yet been run. The 
 
 ### Run identity and scope
 
-On November 16, 2026 (10:57 p.m. EST), I ran the development split only using the CMU AI Gateway (`ai-gateway.andrew.cmu.edu`), model `gpt-5.6-luna`, and retrieval top-k 4. The reproducibility record is in `logs/run_manifest.json` (system-prompt SHA-256 `056e7816624d0e8dcf634c26b1cfee74877b4fe99aee339e51535cf1916eb237`; corpus fingerprint SHA-256 `44fba6d341d2352f104e0cefc37a1343ce2c4aeafeffe273832b9976f244db5d`). The saved answers, retrieved passages, calculator results, and citation audits are in `logs/eval_results_development.json`. The run covered D01–D10. H01–H05 were not run. The first sandboxed attempt returned `APIConnectionError` for every case; I retried with network access and reviewed the successful second run below. The failed attempt is not treated as system behavior.
+On November 16, 2026 (10:57 p.m. EST), I ran the development split only using the CMU AI Gateway (`ai-gateway.andrew.cmu.edu`), model `gpt-5.6-luna`, and retrieval top-k 4. This baseline used scaffold version 0.3 and prompt version `v0.3-policy-2` (system-prompt SHA-256 `056e7816624d0e8dcf634c26b1cfee74877b4fe99aee339e51535cf1916eb237`; corpus fingerprint SHA-256 `44fba6d341d2352f104e0cefc37a1343ce2c4aeafeffe273832b9976f244db5d`). A separate baseline manifest was not retained; these values are recorded here. `logs/eval_results_development.json` contains the later, improved development rerun, not the baseline answers. The baseline covered D01–D10; H01–H05 were not run. The first sandboxed attempt returned `APIConnectionError` for every case; I retried with network access and reviewed the successful second run below. The failed attempt is not treated as system behavior.
 
 Manual review found **5 of 10 cases satisfactory, 3 partially satisfactory, and 2 unsatisfactory** against the case expectations. These are small-set counts, not estimates of general performance.
 
@@ -199,3 +201,7 @@ The other pasted follow-on answers are consistent with the formal diagnoses: the
 ### Baseline diagnosis
 
 The most consequential observed weakness is **boundary adherence after a refusal or escalation**: the assistant often states a limit, then continues with unsourced domain guidance. The next weakness is **retrieval and citation quality**, especially when metadata or unrelated chunks are treated as support. A further gap is **tool discipline for quantitative comparisons**, shown by the calculator not being used for the reserve comparison in the supplementary scenario. The D09 answer's `$75` minimum-payment figure was correct because that amount is in the frozen case prompt. These diagnoses precede proposed changes; interventions and regression evidence are recorded in [the Part 6 intervention log](</Users/jonathanwang/Desktop/advisor-project/part_6_intervention_log.md>).
+
+## Companion submission files
+
+Part 6's intervention log is in [part_6_intervention_log.md](part_6_intervention_log.md); the deployment recommendation is in [part_7_deployment_decision.md](part_7_deployment_decision.md); and the required supervision reflection is in [ai_supervision_note.md](ai_supervision_note.md).

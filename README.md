@@ -15,7 +15,7 @@ A small, inspectable RAG application for **Fundamentals of Operationalizing AI**
 - chunk-level source references and citation audit
 - JSONL interaction logs
 - sample evaluation cases with full retrieval/prompt evidence
-- reproducibility manifest containing model/backend, retrieval top-k, prompt hash and corpus fingerprint
+- reproducibility manifest containing model/backend, policy version, retrieval top-k, prompt hash and corpus fingerprint
 
 The scaffold intentionally stays small enough to inspect:
 

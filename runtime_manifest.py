@@ -5,6 +5,7 @@ from hashlib import sha256
 import json
 import os
 from pathlib import Path
+from prompts import POLICY_VERSION
 
 
 def _sha_text(text: str) -> str:
@@ -32,6 +33,7 @@ def build_manifest(root: str | Path, system_prompt: str, top_k: int) -> dict:
     return {
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "scaffold_version": version,
+        "policy_version": POLICY_VERSION,
         "backend": backend,
         "model": model,
         "model_sampling_settings": "provider defaults; scaffold does not set temperature/seed",

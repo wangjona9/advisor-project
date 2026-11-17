@@ -36,5 +36,12 @@
       "file": "13_irs_limits_2027.md",
       "sha256": "7b2b3a645cc4c166004e1051cf70b5123266f8b8e8c3640fe2dff31b51f92561"
     }
-  ]
+  ],
+  "evaluation_provenance": {
+    "source_build": "0.3",
+    "policy_version": "v0.3-policy-3",
+    "git_commit": "not recorded at run time",
+    "note": "Run snapshot provenance annotation; this describes the evaluated prompt/build, not the current post-evaluation checkout."
+  },
+  "policy_version": "v0.3-policy-3"
 }
