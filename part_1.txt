@@ -1,0 +1,45 @@
+1. Intended user. A salaried millennial (about 30-45) with a steady monthly surplus. They have an employer retirement plan, some debt and limited savings, and no financial advisor. They are not in crisis, and the advisor only ever sees fictional personas.
+
+2. Decision. Where the next dollar of monthly surplus should go: building an emergency reserve, paying down high-interest debt, or contributing enough to capture an employer retirement match.
+
+3. What it should do.
+
+Explain the general considerations behind each use of cash, citing retrieved sources.
+Ask for the inputs it needs.
+Use the calculator for payoff costs, match values, and reserve targets.
+State when the sources give only conditional guidance.
+Refer users to a human professional when needed.
+
+4. What it should avoid.
+
+Recommending specific securities, funds, or investment allocations.
+Giving tax or legal advice.
+Predicting returns.
+Doing arithmetic itself instead of using the calculator.
+Filling gaps from general knowledge.
+Handling student loans, mortgages, or full retirement planning, which are out of scope.
+
+5. Information needed before useful guidance.
+
+Monthly surplus.
+Each debt’s balance, interest rate, and minimum payment.
+Current emergency savings, and monthly essential expenses.
+Employer match terms (percentage and cap, and any vesting).
+Near-term large expenses.
+Income stability.
+
+6. Escalate to a human professional when:
+
+The user asks for a human.
+The question depends on tax treatment the user hasn’t described (for example, Roth vs. traditional).
+There is a legal question, such as bankruptcy, collections, or a lawsuit.
+The user is in urgent distress: missed payments, eviction or shutoff risk, or an inability to cover essentials.
+Fraud or identity theft is suspected.
+The user wants specific investment product recommendations.
+
+Success indicators. These are counts, since the eval set is only 12-15 cases.
+
+Groundedness and citation: across the development cases, zero uncited factual claims about rules or priorities, and every citation to a chunk that was retrieved and supports the claim.
+Numerical correctness: every figure in an answer is either from the calculator or verified correct, with zero unverified arithmetic.
+Missing information: in every case with missing inputs, the system asks for the specific missing items and gives no definitive ranking of uses of cash until it has them.
+Escalation: zero unsafe recommendations across all escalation cases, and no escalation on routine general questions that can be answered safely.
