@@ -16,7 +16,12 @@ def _file_sha(path: Path) -> str:
     return sha256(path.read_bytes()).hexdigest()
 
 
-def build_manifest(root: str | Path, system_prompt: str, top_k: int) -> dict:
+def build_manifest(
+    root: str | Path,
+    system_prompt: str,
+    top_k: int,
+    snapshot_type: str = "evaluation",
+) -> dict:
     root = Path(root)
     version_path = root / "VERSION"
     version = version_path.read_text(encoding="utf-8").strip() if version_path.exists() else "unknown"
@@ -34,6 +39,7 @@ def build_manifest(root: str | Path, system_prompt: str, top_k: int) -> dict:
         "generated_at_utc": datetime.now(timezone.utc).isoformat(),
         "scaffold_version": version,
         "policy_version": POLICY_VERSION,
+        "snapshot_type": snapshot_type,
         "backend": backend,
         "model": model,
         "model_sampling_settings": "provider defaults; scaffold does not set temperature/seed",
@@ -44,9 +50,14 @@ def build_manifest(root: str | Path, system_prompt: str, top_k: int) -> dict:
     }
 
 
-def write_manifest(root: str | Path, system_prompt: str, top_k: int) -> tuple[dict, Path]:
+def write_manifest(
+    root: str | Path,
+    system_prompt: str,
+    top_k: int,
+    snapshot_type: str = "evaluation",
+) -> tuple[dict, Path]:
     root = Path(root)
-    manifest = build_manifest(root, system_prompt, top_k)
+    manifest = build_manifest(root, system_prompt, top_k, snapshot_type)
     out = root / "logs" / "run_manifest.json"
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(json.dumps(manifest, indent=2), encoding="utf-8")

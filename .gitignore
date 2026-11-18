@@ -7,3 +7,6 @@ logs/*
 !logs/eval_results_development.json
 !logs/eval_results_heldout.json
 !logs/run_manifest.json
+!logs/run_manifest_development.json
+!logs/run_manifest_heldout.json
+!logs/baseline_manual_review.json

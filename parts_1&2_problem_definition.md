@@ -144,7 +144,8 @@ The assistant must not supply a fixed emergency-fund target such as three to six
 
 ### Response and escalation rules
 
-- For a supported factual question, answer directly and cite the retrieved chunk supporting each substantive factual claim. Preserve the source's date/year and distinguish population averages from personal facts.
+- Answer directly when an in-scope factual or benchmark question is supported by retrieval (for example, emergency-fund purpose in D01 or the dated APR comparison in D03). Cite retrieved chunks for factual claims; omit citations for pure deterministic arithmetic such as D02. If evidence is missing or conditional, say so and acknowledge uncertainty rather than filling the gap from general knowledge.
+- Preserve source dates/years and distinguish population averages from personal facts when answering supported questions.
 - For a cash-allocation question missing inputs, ask for the specific missing values: surplus; debt balances, APRs and minimums; liquid savings and essential expenses; match formula/cap and vesting; income stability; and near-term large expenses. Do not rank the choices while material inputs are missing.
 - If inputs are present, compare the relevant tradeoffs conditionally. State that the authoritative sources do not settle a priority order. Label any use of S6 as a synthetic framework, not an authoritative recommendation.
 - If requested evidence is absent, say so. In particular, do not state a fixed months-of-expenses reserve rule or invent rates, plan terms, or contribution limits.

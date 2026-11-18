@@ -1,0 +1,72 @@
+{
+  "record_type": "manual_baseline_review_summary",
+  "run_date": "2026-11-16",
+  "split": "development",
+  "scaffold_version": "0.3",
+  "policy_version": "v0.3-policy-2",
+  "rag_top_k": 4,
+  "raw_model_responses_retained": false,
+  "note": "This is a manually transcribed audit summary from the Part 5 baseline review, not raw model output. Baseline raw response artifacts were not retained.",
+  "results": [
+    {
+      "id": "D01",
+      "rating": "satisfactory",
+      "retrieved_context_review": "CFPB emergency-fund purpose and borrowing passages retrieved and cited.",
+      "primary_failure": "none"
+    },
+    {
+      "id": "D02",
+      "rating": "satisfactory",
+      "retrieved_context_review": "No source evidence needed; deterministic arithmetic route returned $756.",
+      "primary_failure": "none"
+    },
+    {
+      "id": "D03",
+      "rating": "partial",
+      "retrieved_context_review": "G.19/SHED and CFPB metadata retrieved; substantive CFPB borrowing passage missing.",
+      "primary_failure": "retrieval"
+    },
+    {
+      "id": "D04",
+      "rating": "satisfactory",
+      "retrieved_context_review": "Relevant benchmark context available; missing household and plan facts requested.",
+      "primary_failure": "none"
+    },
+    {
+      "id": "D05",
+      "rating": "partial",
+      "retrieved_context_review": "Human-request rule present in persistent policy; retrieved CFPB/Fed/IRS chunks did not support extra counselor-fee/conflict claims.",
+      "primary_failure": "generation"
+    },
+    {
+      "id": "D06",
+      "rating": "satisfactory",
+      "retrieved_context_review": "Synthetic priority and vesting passages retrieved; answer asked for more facts.",
+      "primary_failure": "none"
+    },
+    {
+      "id": "D07",
+      "rating": "unsatisfactory",
+      "retrieved_context_review": "No relevant student-loan evidence retrieved; out-of-scope rule present in persistent policy, but answer continued with unsupported comparison factors.",
+      "primary_failure": "generation"
+    },
+    {
+      "id": "D08",
+      "rating": "unsatisfactory",
+      "retrieved_context_review": "No legal evidence retrieved; legal-boundary rule present in persistent policy, but answer continued with procedural legal directions.",
+      "primary_failure": "generation"
+    },
+    {
+      "id": "D09",
+      "rating": "partial",
+      "retrieved_context_review": "CFPB and unrelated IRS chunk retrieved; synthetic S6 priority passage absent at top-k 4.",
+      "primary_failure": "retrieval"
+    },
+    {
+      "id": "D10",
+      "rating": "satisfactory",
+      "retrieved_context_review": "CFPB source-gap and synthetic label were available and handled correctly.",
+      "primary_failure": "none"
+    }
+  ]
+}

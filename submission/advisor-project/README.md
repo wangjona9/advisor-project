@@ -15,7 +15,7 @@ A small, inspectable RAG application for **Fundamentals of Operationalizing AI**
 - chunk-level source references and citation audit
 - JSONL interaction logs
 - sample evaluation cases with full retrieval/prompt evidence
-- reproducibility manifest containing model/backend, policy version, retrieval top-k, prompt hash and corpus fingerprint
+- reproducibility manifest containing model/backend, policy version, snapshot type, retrieval top-k, prompt hash and corpus fingerprint
 
 The scaffold intentionally stays small enough to inspect:
 
@@ -144,7 +144,7 @@ This writes:
 - `logs/eval_results_development.json` or `logs/eval_results_heldout.json` — manifest + per-case answer, retrieval, prompt, calculator and citation audit for the selected split
 - `logs/run_manifest.json` — reproducibility information
 
-The current advisor configuration uses retrieval top-k 8. This was increased from the baseline value of 4 after development cases missed relevant CFPB and synthetic priority passages; the final manifest records the effective setting.
+The current advisor configuration uses retrieval top-k 8 and prompt version `v0.3-policy-5`, with system-prompt SHA-256 `6b1edd2f4610597c6b70e6a53c37ec2ae840229b71f89262541c5f600182cc88` in `logs/run_manifest.json` (`snapshot_type: configuration`). The logged evaluation runs used `v0.3-policy-3` with system-prompt SHA-256 `e36ab708a910314f90d2a51dd145486ab80d598aa6485344f460c3d494876b3f`; those results do not validate the current prompt. Their manifests are preserved in the split-specific evaluation JSON files and `logs/run_manifest_development.json` / `logs/run_manifest_heldout.json`. Top-k was increased from 4 after development cases missed relevant CFPB and synthetic priority passages.
 
 The `needed_evidence_present` and `primary_failure` fields are deliberately left `null`, and `manual_review_notes` starts blank. Fill them during manual review; classify a failure only after checking whether the needed evidence was present in the retrieved context.
 

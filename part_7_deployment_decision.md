@@ -49,4 +49,4 @@ The evaluation does not adequately test **long, noisy conversations or actual hu
 
 Reconsider a limited pilot only after the current post-polish version passes the prior regressions and targeted held-out retests—especially H05-style multi-turn escalation—with no critical failures, citations are manually confirmed to support consequential claims, and a human review and pause process is staffed. Passing a small test set would be a necessary gate, not proof that all customer risks are resolved.
 
-**Supporting records:** [Part 6 intervention log](part_6_intervention_log.md), [AI supervision note](ai_supervision_note.md), [development results](logs/eval_results_development.json), [held-out results](logs/eval_results_heldout.json), and [run manifest](logs/run_manifest.json).
+**Supporting records:** [Part 6 intervention log](part_6_intervention_log.md), [AI supervision note](ai_supervision_note.md), [development results](logs/eval_results_development.json), [held-out results](logs/eval_results_heldout.json), and the versioned evaluation manifests alongside the current configuration manifest.

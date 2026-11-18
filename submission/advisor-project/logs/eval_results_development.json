@@ -44,7 +44,8 @@
       "git_commit": "not recorded at run time",
       "note": "Run snapshot provenance annotation; this describes the evaluated prompt/build, not the current post-evaluation checkout."
     },
-    "policy_version": "v0.3-policy-3"
+    "policy_version": "v0.3-policy-3",
+    "snapshot_type": "evaluation"
   },
   "results": [
     {

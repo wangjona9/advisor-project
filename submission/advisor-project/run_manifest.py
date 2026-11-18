@@ -8,7 +8,7 @@ from runtime_manifest import write_manifest
 load_dotenv()
 ROOT = Path(__file__).parent
 TOP_K = int(os.getenv("RAG_TOP_K", "4"))
-manifest, path = write_manifest(ROOT, SYSTEM_PROMPT, TOP_K)
+manifest, path = write_manifest(ROOT, SYSTEM_PROMPT, TOP_K, snapshot_type="configuration")
 print(f"Wrote run manifest to {path}")
 for key in ["scaffold_version", "policy_version", "backend", "model", "rag_top_k", "system_prompt_sha256", "corpus_fingerprint_sha256"]:
     print(f"{key}: {manifest[key]}")
